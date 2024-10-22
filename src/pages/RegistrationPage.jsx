@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 
 import { useRegister } from "../services/mutations";
 
+import styles from "./RegistrationPage.module.css";
+
 function RegistrationPage() {
   const [form, setForm] = useState({
     username: "",
@@ -39,30 +41,34 @@ function RegistrationPage() {
   };
 
   return (
-    <form onSubmit={registerHandler}>
-      <input
-        type="text"
-        name="username"
-        placeholder="username"
-        value={form.username}
-        onChange={changeHandler}
-      />
-      <input
-        type="password"
-        name="password"
-        placeholder="password"
-        value={form.password}
-        onChange={changeHandler}
-      />
-      <input
-        type="password"
-        name="confirmPassword"
-        placeholder="confirm password"
-        value={form.confirmPassword}
-        onChange={changeHandler}
-      />
-      <button type="submit">Register</button>
-    </form>
+    <div className={styles.box}>
+      <img src="../assets/Union.png" />
+      <p>فرم ثبت نام</p>
+      <form onSubmit={registerHandler} className={styles.form}>
+        <input
+          type="text"
+          name="username"
+          placeholder="نام کاربری"
+          value={form.username}
+          onChange={changeHandler}
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="رمز عبور"
+          value={form.password}
+          onChange={changeHandler}
+        />
+        <input
+          type="password"
+          name="confirmPassword"
+          placeholder="تکرار رمز عبور"
+          value={form.confirmPassword}
+          onChange={changeHandler}
+        />
+        <button type="submit">ثبت نام</button>
+      </form>
+    </div>
   );
 }
 

@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useLogin } from "../services/mutations";
 import { setCookie } from "../utils/cookie";
 
+import styles from "./LoginPage.module.css";
+
 function LoginPage() {
   const [form, setForm] = useState({
     username: "",
@@ -35,23 +37,27 @@ function LoginPage() {
   };
 
   return (
-    <form onSubmit={loginHandler}>
-      <input
-        type="text"
-        name="username"
-        placeholder="username"
-        value={form.username}
-        onChange={changeHandler}
-      />
-      <input
-        type="password"
-        name="password"
-        placeholder="password"
-        value={form.password}
-        onChange={changeHandler}
-      />
-      <button type="submit">Register</button>
-    </form>
+    <div className={styles.box}>
+      <img src="../assets/Union.png"  />
+      <p>فرم ورود</p>
+      <form onSubmit={loginHandler} className={styles.form}>
+        <input
+          type="text"
+          name="username"
+          placeholder="نام کاربری"
+          value={form.username}
+          onChange={changeHandler}
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="رمز عبور"
+          value={form.password}
+          onChange={changeHandler}
+        />
+        <button type="submit">ورود</button>
+      </form>
+    </div>
   );
 }
 
