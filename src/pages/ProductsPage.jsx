@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getProducts } from "../services/queries";
+import { getProducts, searchProduct } from "../services/queries";
 
 import { HiOutlineTrash } from "react-icons/hi2";
 import { FaRegEdit } from "react-icons/fa";
@@ -7,15 +7,18 @@ import { VscSettings } from "react-icons/vsc";
 import { CiSearch } from "react-icons/ci";
 
 import styles from "./ProductsPage.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddModalProduct from "./AddModalProduct";
 import Loading from "./Loading";
 
 function ProductsPage() {
   const [isModalOpen, setModalOpen] = useState(null);
+  const [text, setText] = useState("");
+
+
 
   const { data, isLoading } = useQuery({
-    queryKey: ["get-products"],
+    queryKey: ["products"],
     queryFn: getProducts,
   });
 
@@ -30,7 +33,12 @@ function ProductsPage() {
           <span>
             <CiSearch />
           </span>
-          <input type="text" placeholder="جستجو کالا" />
+          <input
+            type="text"
+            placeholder="جستجو کالا"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+          />
         </div>
         <div className={styles.manage}>
           <div className={styles.manage_product}>
@@ -62,7 +70,7 @@ function ProductsPage() {
           </thead>
           <tbody>
             {isLoading ? (
-            <Loading />
+              <Loading />
             ) : (
               data.data.data.map((i) => (
                 <tr key={i.id}>
