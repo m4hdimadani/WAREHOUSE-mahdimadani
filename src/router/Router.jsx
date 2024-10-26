@@ -15,7 +15,7 @@ function Router() {
     <BrowserRouter>
       <Routes>
         <Route
-          path="/"
+          index="/"
           element={token ? <ProductsPage /> : <Navigate to="/login" />}
         />
         <Route path="/login" element={<LoginPage />} />

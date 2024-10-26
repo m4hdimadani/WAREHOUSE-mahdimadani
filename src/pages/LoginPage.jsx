@@ -28,11 +28,10 @@ function LoginPage() {
 
     mutate(form, {
       onSuccess: (data) => {
-        console.log(data.data);
         setCookie("token", data.data?.token);
         navigate("/");
       },
-      onError: (error) => console.log(error.response.data.message),
+      onError: (error) =>  alert(error.response.data.message),
     });
   };
 

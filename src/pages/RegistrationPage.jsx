@@ -32,10 +32,10 @@ function RegistrationPage() {
       { username, password },
       {
         onSuccess: (data) => {
-          console.log(data.data.message);
+          alert(data.data.message);
           navigate("/login");
         },
-        onError: (error) => console.log(error.response.data.message),
+        onError: (error) => alert(error.response.data.message),
       }
     );
   };
