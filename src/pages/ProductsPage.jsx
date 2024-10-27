@@ -1,21 +1,21 @@
-import { useQuery } from "@tanstack/react-query";
-import { getProducts, searchProduct } from "../services/queries";
-
+import {  useQuery, useQueryClient } from "@tanstack/react-query";
+import { getProducts, useDeleteProduct } from "../services/queries";
+import { useState } from "react";
 import { HiOutlineTrash } from "react-icons/hi2";
 import { FaRegEdit } from "react-icons/fa";
 import { VscSettings } from "react-icons/vsc";
 import { CiSearch } from "react-icons/ci";
 
 import styles from "./ProductsPage.module.css";
-import { useEffect, useState } from "react";
 import AddModalProduct from "./AddModalProduct";
 import Loading from "./Loading";
+import toast from "react-hot-toast";
 
 function ProductsPage() {
   const [isModalOpen, setModalOpen] = useState(null);
+  const queryClient = useQueryClient();
+
   const [text, setText] = useState("");
-
-
 
   const { data, isLoading } = useQuery({
     queryKey: ["products"],
@@ -24,6 +24,20 @@ function ProductsPage() {
 
   const showHandler = () => {
     setModalOpen(true);
+  };
+  const { mutate } = useDeleteProduct();
+
+  const deleteHandler = (id) => {
+    mutate(id, {
+      onSuccess: () => {
+        toast.success("محصول با مفقیت حذف شد");
+        queryClient.invalidateQueries("products");
+      },
+      onError: (err) => {
+        toast.error("خطا ناموغف");
+        console.log(err);
+      },
+    });
   };
 
   return (
@@ -72,7 +86,7 @@ function ProductsPage() {
             {isLoading ? (
               <Loading />
             ) : (
-              data.data.data.map((i) => (
+              data?.data?.data.map((i) => (
                 <tr key={i.id}>
                   <td>{i.name}</td>
                   <td>{i.quantity}</td>
@@ -86,7 +100,10 @@ function ProductsPage() {
                     <span className={styles.edit}>
                       <FaRegEdit />
                     </span>
-                    <span className={styles.trash}>
+                    <span
+                      className={styles.trash}
+                      onClick={() => deleteHandler(i.id)}
+                    >
                       <HiOutlineTrash />
                     </span>
                   </td>

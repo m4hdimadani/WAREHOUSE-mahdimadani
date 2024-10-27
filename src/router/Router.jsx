@@ -15,9 +15,10 @@ function Router() {
     <BrowserRouter>
       <Routes>
         <Route
-          index="/"
-          element={token ? <ProductsPage /> : <Navigate to="/login" />}
+          path="/"
+          element={token ? <ProductsPage  /> : <Navigate to="/login" />}
         />
+        
         <Route path="/login" element={<LoginPage />} />
         <Route path="/registration" element={<RegistrationPage />} />
         <Route path="*" element={<NotFoundPage />} />
